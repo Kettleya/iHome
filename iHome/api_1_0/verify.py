@@ -3,7 +3,6 @@
 from flask import abort
 from flask import make_response
 from flask import request, jsonify
-
 from iHome import constants
 from iHome.utils.response_code import RET
 from . import api

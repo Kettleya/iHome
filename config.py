@@ -1,5 +1,5 @@
 # -*- coding:utf-8 -*-
-
+import logging
 import redis
 
 
@@ -23,6 +23,8 @@ class Config(object):
     SESSION_USER_SIGNER = True
     # 设置Session生命周期
     PERMANENT_SESSION_LIFETIME = 172800
+    # 开发环境日志等级
+    LOGGING_LEVEL = logging.DEBUG
 
 
 class DevelopmentConfig(Config):
