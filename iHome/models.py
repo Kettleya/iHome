@@ -2,7 +2,7 @@
 # ihome所使用的所有模型
 
 from datetime import datetime
-
+from werkzeug.security import generate_password_hash, check_password_hash
 from iHome import constants
 from . import db
 

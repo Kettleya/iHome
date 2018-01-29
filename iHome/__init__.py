@@ -32,7 +32,11 @@ def create_app(config_name):
     app.url_map.converters['re'] = RegexConverter
 
     # 注册蓝图,再使用时引入
+    from iHome.api_1_0 import api
+    app.register_blueprint(api,url_prefix='/api/v1.0')
+
     from web_html import html
     app.register_blueprint(html)
+
 
     return app
