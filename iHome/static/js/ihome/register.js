@@ -49,7 +49,16 @@ function sendSMSCode() {
         return;
     }
 
-    // TODO: 通过ajax方式向后端接口发送请求，让后端发送短信验证码
+    //  通过ajax方式向后端接口发送请求，让后端发送短信验证码
+    var params = {
+        'mobile':mobile,
+        'image_code':imageCode,
+        'image_code_id':imageCodeId
+    }
+
+    $.ajax({
+
+    })
 }
 
 $(document).ready(function() {

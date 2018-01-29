@@ -14,3 +14,7 @@
 %s %s:%d 127.0.0.1 - - [29/Jan/2018 17:05:56] "GET /static/js/ihome/register.js?v=4 HTTP/1.1" 304 -
 %s %s:%d 127.0.0.1 - - [29/Jan/2018 17:05:56] "GET /api/v1.0/image_code?cur_id=221384dd-ba7b-49c8-a273-2d405fe7230a&pre_id= HTTP/1.1" 200 -
 %s %s:%d 127.0.0.1 - - [29/Jan/2018 17:05:56] "GET /favicon.ico HTTP/1.1" 200 -
+%s %s:%d  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+%s %s:%d  * Restarting with stat
+%s %s:%d  * Debugger is active!
+%s %s:%d  * Debugger PIN: 273-071-860
