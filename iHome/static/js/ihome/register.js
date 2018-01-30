@@ -57,6 +57,10 @@ function sendSMSCode() {
     }
 
     $.ajax({
+        url: "/api/v1.0/sms_code",  // 请求地址
+        type: "post",               // 请求方式
+        data: JSON.stringify(params),// 请求参数
+        contentType: "application/json"// 请求参数的数据类型
 
     })
 }

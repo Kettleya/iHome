@@ -2,7 +2,8 @@
 # 验证码的提供：图片验证码和短信验证码
 import random
 import re
-
+from flask import json
+from iHome.utils.sms import CCP
 from flask import abort
 from flask import current_app
 from flask import make_response
@@ -29,9 +30,12 @@ def send_sms_code():
     :return:
     """
     # 1.接收前端发来的参数
-    json_dict = request.json
+    # JSON字符串
+    json_data = request.data
+    # 转成字典
+    json_dict = json.loads(json_data)
     mobile = json_dict.get('mobile')
-    image_code = json_dict.get('image_cope')
+    image_code = json_dict.get('image_code')
     image_code_id = json_dict.get('image_code_id')
 
     # 2.判断参数是否有值和校验参数
@@ -40,7 +44,7 @@ def send_sms_code():
 
     # 3.取出图片验证码
     try:
-        real_image_code = redis_store.get('ImageCode' + image_code_id)
+        real_image_code = redis_store.get('ImageCode:' + image_code_id)
     except Exception as e:
         current_app.logger.error(e)
         return jsonify(errno=RET.DBERR, errmsg='查询验证码出错')
@@ -51,7 +55,7 @@ def send_sms_code():
 
     # 4.进行验证码的对比,如果不一致则return
     if real_image_code.upper() != image_code.upper():
-        return
+        return jsonify(errno=RET.DATAERR,errmsg='验证码输入不正确')
 
         # 5.校验手机验证码是否符合规范
     if not re.match('^1[34578][0-9]{9}$', mobile):
@@ -98,15 +102,15 @@ def get_image_code():
         abort(403)
 
     # 2. 生成图片验证码
-    name, text, image = captcha.generate_captcha()
-
+    _, text, image = captcha.generate_captcha()
+    current_app.logger.debug("图片验证码为：" + text)
     # 3. 将图片验证码内容通过图片编码保存到redis中
     try:
         redis_store.set("ImageCode:" + cur_id, text, constants.IMAGE_CODE_REDIS_EXPIRES)
         if pre_id:
             redis_store.delete("ImageCode:" + pre_id)
     except Exception as e:
-        print e
+        current_app.logger.error(e)
         return jsonify(errno=RET.DBERR, errmsg="保存验证码数据失败")
 
     # 返回图片验证码的图片

@@ -30,22 +30,28 @@ softVersion='2013-12-26';
   # @param datas 内容数据 格式为数组 例如：{'12','34'}，如不需替换请填 ''
   # @param $tempId 模板Id
 
-def sendTemplateSMS(to,datas,tempId):
+class CCP(object):
 
-    
-    #初始化REST SDK
-    rest = REST(serverIP,serverPort,softVersion)
-    rest.setAccount(accountSid,accountToken)
-    rest.setAppId(appId)
-    
-    result = rest.sendTemplateSMS(to,datas,tempId)
-    for k,v in result.iteritems(): 
-        
-        if k=='templateSMS' :
-                for k,s in v.iteritems(): 
-                    print '%s:%s' % (k, s)
+    def __new__(cls, *args, **kwargs):
+        if not hasattr(cls, "_instance"):
+            cls._instance = super(CCP, cls).__new__(cls, *args, **kwargs)
+            cls._instance.rest = REST(serverIP, serverPort, softVersion)
+            cls._instance.rest.setAccount(accountSid, accountToken)
+            cls._instance.rest.setAppId(appId)
+        return cls._instance
+
+    def send_template_sms(self, to, datas, temp_id):
+        result = self.rest.sendTemplateSMS(to, datas, temp_id)
+
+        status_code = result.get("statusCode")
+
+        if status_code == "000000":
+
+            return 1
         else:
-            print '%s:%s' % (k, v)
-    
-   
-sendTemplateSMS('13676718027',['666666','5'],'1')
+
+            return 0
+
+
+if __name__ == '__main__':
+    print CCP().send_template_sms("", ["888888", "5"], "1")
