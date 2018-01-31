@@ -9,6 +9,16 @@ from iHome.utils.response_code import RET
 from . import api
 
 
+@api.route('/session',methods=['DELETE'])
+def logout():
+    """执行退出操作"""
+    session.pop('name')
+    session.pop('user_id')
+    session.pop('mobile')
+
+    return jsonify(errno=RET.OK, errmsg='OK')
+
+
 @api.route('/session', methods=['POST'])
 def login():
     """
