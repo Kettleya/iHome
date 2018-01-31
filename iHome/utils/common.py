@@ -1,10 +1,8 @@
 # -*- coding:utf-8 -*-
 import functools
-
 from flask import g
 from flask import session, jsonify
 from werkzeug.routing import BaseConverter
-
 from iHome.utils.response_code import RET
 
 

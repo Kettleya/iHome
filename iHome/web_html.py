@@ -2,8 +2,8 @@
 
 from flask import Blueprint, current_app
 from flask import make_response
-# from flask_wtf.csrf import generate_csrf
-from flask.ext.wtf.csrf import generate_csrf
+from flask_wtf.csrf import generate_csrf
+# from flask.ext.wtf.csrf import generate_csrf
 
 html = Blueprint('html', __name__)
 
