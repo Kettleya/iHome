@@ -40,6 +40,14 @@ class User(BaseModel, db.Model):
     def check_password(self,password):
         return check_password_hash(self.password_hash,password)
 
+    def to_dict(self):
+        resp={
+            'name':self.name,
+            'avatar_rul':constants.QINIU_DOMIN_PREFIX+(self.avatar_url if self.avatar_url else ''),
+            'mobile':self.mobile,
+            'user_id':self.id,
+        }
+        return resp
 
 
 class Area(BaseModel, db.Model):
